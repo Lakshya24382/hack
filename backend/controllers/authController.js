@@ -1,64 +1,48 @@
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// REGISTER
-export const register = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
+    const { name, email, password, skillsOffered, skillsWanted } = req.body;
 
-    const { name, email, password } = req.body;
-
-    const hashed = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
+    const user = new User({
       name,
       email,
-      password: hashed
+      password,
+      skillsOffered,
+      skillsWanted
     });
 
-    res.json(user);
+    await user.save();
 
-  } catch (err) {
-    res.status(500).json(err);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };
 
-
-// LOGIN
-export const login = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
 
-    if (!user) return res.status(400).json("User not found");
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
-    const valid = await bcrypt.compare(password, user.password);
+    if (user.password !== password) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
 
-    if (!valid) return res.status(400).json("Invalid password");
-
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET
-    );
-
-    const { password: pw, ...userData } = user._doc;
+    const token = jwt.sign({ id: user._id }, "secret123");
 
     res.json({
       token,
-      user: userData
+      user
     });
 
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-export const getProfile = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-    res.json(user);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };

@@ -1,16 +1,51 @@
-import React from "react";
+import { useState } from "react";
+import API from "../api/api";
 
-const Login = () => {
+export default function Login() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+
+      const res = await API.post("/auth/login", {
+        email,
+        password
+      });
+
+      localStorage.setItem("token", res.data.token);
+
+      alert("Login successful!");
+
+    } catch (err) {
+      console.log(err);
+      alert("Login failed");
+    }
+  };
+
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h2>Login</h2>
 
-      <input placeholder="Email" />
-      <input placeholder="Password" type="password"/>
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
 
-      <button>Login</button>
+      <br /><br />
+
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={handleLogin}>
+        Login
+      </button>
     </div>
   );
-};
-
-export default Login;
+}

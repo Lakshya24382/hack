@@ -1,24 +1,12 @@
 import mongoose from "mongoose";
 
-const swapSchema = new mongoose.Schema(
-{
-  fromUser: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+const swapSchema = new mongoose.Schema({
+  users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  skillExchanged: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
-  toUser: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  },
-  skillOffered: String,
-  skillRequested: String,
-  status: {
-    type: String,
-    enum: ["pending", "accepted", "rejected"],
-    default: "pending"
-  }
-},
-{ timestamps: true }
-);
+});
 
 export default mongoose.model("Swap", swapSchema);

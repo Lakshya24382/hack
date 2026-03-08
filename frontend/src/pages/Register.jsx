@@ -1,15 +1,11 @@
-const Register = () => {
+export default function Register() {
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h2>Register</h2>
-
-      <input placeholder="Name"/>
-      <input placeholder="Email"/>
-      <input placeholder="Password" type="password"/>
-
-      <button>Register</button>
+      <input placeholder="Name" /><br /><br />
+      <input placeholder="Email" /><br /><br />
+      <input placeholder="Password" type="password" /><br /><br />
+      <button>Create Account</button>
     </div>
   );
-};
-
-export default Register;
+}

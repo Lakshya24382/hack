@@ -1,11 +1,8 @@
-const Swaps = () => {
+export default function Swaps() {
   return (
-    <div>
-      <h2>Your Swap Requests</h2>
-
-      <p>React ↔ UI Design (Pending)</p>
+    <div style={{ padding: 20 }}>
+      <h2>Your Swaps</h2>
+      <p>No swaps yet.</p>
     </div>
   );
-};
-
-export default Swaps;
+}

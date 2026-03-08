@@ -1,14 +1,17 @@
-const UserCard = () => {
+export default function UserCard({ user, onRequest }) {
   return (
-    <div style={{border:"1px solid #ccc", padding:"10px", margin:"10px"}}>
-      <h3>User Name</h3>
+    <div style={{ border: "1px solid #ddd", padding: 10, marginBottom: 10 }}>
+      <h3>{user.name}</h3>
 
-      <p>Skills Offered: React, Node</p>
-      <p>Skills Wanted: UI Design</p>
+      <p>
+        <strong>Offers:</strong> {user.skillsOffered?.join(", ")}
+      </p>
 
-      <button>Request Swap</button>
+      <p>
+        <strong>Wants:</strong> {user.skillsWanted?.join(", ")}
+      </p>
+
+      <button onClick={() => onRequest(user._id)}>Request Swap</button>
     </div>
   );
-};
-
-export default UserCard;
+}

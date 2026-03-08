@@ -1,16 +1,13 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <nav style={{display:"flex", justifyContent:"space-between", padding:"10px 20px", background:"#111", color:"#fff"}}>
-      <h2>SkillSwap</h2>
-      <div>
-        <button>Dashboard</button>
-        <button>Profile</button>
-        <button>Swaps</button>
-      </div>
+    <nav style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
+      <Link to="/" style={{ marginRight: 15 }}>Dashboard</Link>
+      <Link to="/requests" style={{ marginRight: 15 }}>Requests</Link>
+      <Link to="/swaps" style={{ marginRight: 15 }}>Swaps</Link>
+      <Link to="/profile" style={{ marginRight: 15 }}>Profile</Link>
+      <Link to="/login" style={{ marginRight: 15 }}>Login</Link>
     </nav>
   );
-};
-
-export default Navbar;
+}
